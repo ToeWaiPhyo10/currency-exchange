@@ -1,4 +1,5 @@
 import { currencyList } from "@/utils/currencyList";
+import { InverseCurrency } from "@/utils/inverseCurrency";
 import { useEffect, useState } from "react";
 
 export default function useCurrencyRate() {
@@ -16,9 +17,14 @@ export default function useCurrencyRate() {
         const rateArray = currencyList().map((currency) => {
           const { code } = currency;
           if (rateList.conversion_rates[code] !== undefined) {
+            const inverseCurrency = InverseCurrency({
+              rate: rateList.conversion_rates[code],
+              amount: 1,
+            });
+
             return {
               ...currency,
-              conversionRate: rateList.conversion_rates[code],
+              conversionRate: inverseCurrency.toFixed(6),
             };
           }
           return currency;
