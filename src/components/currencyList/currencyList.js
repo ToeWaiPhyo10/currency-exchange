@@ -5,6 +5,7 @@ import useCurrencyRate from "@/hooks/useCurrencyRate";
 import Loading from "../Loading";
 
 const CurrencyList = () => {
+  //use as hook so we can reuse in other module
   const { rateArray, loading } = useCurrencyRate();
 
   return (
@@ -15,7 +16,7 @@ const CurrencyList = () => {
       {loading ? (
         <Loading />
       ) : (
-        rateArray && <ReactBootstrapTable data={rateArray} />
+        rateArray.length > 0 && <ReactBootstrapTable data={rateArray} />
       )}
     </div>
   );

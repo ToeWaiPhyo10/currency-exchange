@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import CurrencyLabel from "../base/currencyLabel";
 import { toast } from "react-toastify";
 
 const EmailSubmitForm = () => {
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -12,6 +13,7 @@ const EmailSubmitForm = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
+    setLoading(true);
     //use nextjs server route in order to secure api token
     await fetch("/api/sendEmail", {
       method: "POST",
@@ -27,6 +29,7 @@ const EmailSubmitForm = () => {
       reset();
       return res.json();
     });
+    setLoading(false);
   };
   const validateEmail = (value) => {
     if (!value) {
@@ -93,8 +96,9 @@ const EmailSubmitForm = () => {
       <button
         type="submit"
         className="rounded bg-btnPrimary px-[0.875rem] py-2 text-white active:bg-dark disabled:bg-gray-200"
+        disabled={loading}
       >
-        Submit
+        {loading ? "Sending Email..." : "Send Email"}
       </button>
     </form>
   );
