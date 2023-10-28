@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 const API_KEY = process.env.API_KEY;
 export async function GET(req) {
   try {
